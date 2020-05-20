@@ -8,7 +8,7 @@ using WolvesAndRabbitsSimulation.Engine;
 
 namespace WolvesAndRabbitsSimulation.Simulation
 {
-    class Rabbit : GameObject
+   public class Rabbit : GameObject
     {
         private int DEATH_AGE = 1500;
         private int ADULTHOOD = 100;
@@ -50,7 +50,7 @@ namespace WolvesAndRabbitsSimulation.Simulation
         private void Breed(World forest)
         {
             if (age < ADULTHOOD || food < FOOD_TO_BREED) return;
-            if (forest.ObjectsAt(Position).Any(o => o is Rabbit && o != this))
+            if (forest.ObjectsAt(Position).Any(o => o is Rabbit && o != this)) //comentar esta linea para probar breed
             {
                 for (int i = 0; i < MAX_CHILDREN; i++)
                 {
@@ -58,7 +58,7 @@ namespace WolvesAndRabbitsSimulation.Simulation
                     {
                         Rabbit bunny = new Rabbit();
                         bunny.Position = Position;
-                        forest.Add(bunny);
+                        forest.AddRabbit(bunny);
                     }
                 }
             }
@@ -80,7 +80,7 @@ namespace WolvesAndRabbitsSimulation.Simulation
         {
             if (forest.Random(1, 10) <= 10 * DEATH_PROBABILITY)
             {
-                forest.Remove(this);
+                forest.RemoveRabbit(this);
             }
         }
 

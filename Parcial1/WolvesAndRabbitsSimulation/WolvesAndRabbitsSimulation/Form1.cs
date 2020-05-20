@@ -74,14 +74,13 @@ namespace WolvesAndRabbitsSimulation
             Refresh();
             long end = stopwatch.ElapsedMilliseconds;
             RegisterFrameTime(end - begin);
-
-            Text = string.Format("Frames: {3}, Objects: {0}, Average FPS: {1:00}, Current FPS: {2:00}",
-                world.GameObjects.Count(),
+            Text = string.Format("Frames: {3}, Objects: {0}, Average FPS: {1:00}, Current FPS: {2:00}", 
+                world.rabbitList.Count(), //saque el pasto porque no tiene sentido ya que no cambia en valor
                 1000.0 / (frameTime / frameCount),
                 1000.0 / (end - begin),
                 frameCount);
 
-            File.AppendAllText(fileName, string.Format("{0}\n", world.GameObjects.Where(o => o is Rabbit).Count()));
+            File.AppendAllText(fileName, string.Format("{0}\n", world.rabbitList.Count()));
         }
 
         private void RegisterFrameTime(long time)
@@ -92,7 +91,7 @@ namespace WolvesAndRabbitsSimulation
 
         private void lifeSpawner_Tick(object sender, EventArgs e)
         {
-            if (world.GameObjects.Where(o => o is Rabbit).Count() == 0)
+            if (world.rabbitList.Count() == 0) 
             {
                 SpawnSomeRabbits();
             }
@@ -107,7 +106,7 @@ namespace WolvesAndRabbitsSimulation
                     Grass grass = new Grass();
                     grass.Position = new Point(x, y);
                     grass.Growth = world.Random(0, 50);
-                    world.Add(grass);
+                    world.AddGrass(grass);
                 }
             }
         }
@@ -127,7 +126,7 @@ namespace WolvesAndRabbitsSimulation
                 {
                     rabbit.Position = new Point(rabbit.Position.X, 0);
                 }
-                world.Add(rabbit);
+                world.AddRabbit(rabbit);
             }
         }
 

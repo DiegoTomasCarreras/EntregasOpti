@@ -8,7 +8,7 @@ using WolvesAndRabbitsSimulation.Engine;
 
 namespace WolvesAndRabbitsSimulation.Simulation
 {
-    class Grass : GameObject
+  public  class Grass : GameObject
     {
         public const int PATCH_SIZE = 2;
 

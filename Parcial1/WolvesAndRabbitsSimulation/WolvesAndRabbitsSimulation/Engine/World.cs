@@ -4,25 +4,27 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WolvesAndRabbitsSimulation.Simulation;
 
 namespace WolvesAndRabbitsSimulation.Engine
 {
-    class World
+   public class World
     {
         private Random rnd = new Random();
 
         private const int width = 255;
         private const int height = 255;
         private Size size = new Size(width, height);
-        private GameObject[] objects = new GameObject[0];
-
-        public IEnumerable<GameObject> GameObjects
+        //private GameObject[] objects = new GameObject[0];
+        public List<Grass> grasslist = new List<Grass>();
+        public List<Rabbit> rabbitList= new List<Rabbit>();
+       /* public IEnumerable<GameObject> GameObjects
         {
             get
             {
-                return objects.ToArray();
+                return objects.ToArray(); //tengo que buscar donde modificar para devolver pasto donde se necesita y conejos donde se necesitan
             }
-        }
+        }*/
 
         public int Width { get { return width; } }
         public int Height { get { return height; } }
@@ -42,31 +44,46 @@ namespace WolvesAndRabbitsSimulation.Engine
             return rnd.Next(min, max);
         }
 
-        public void Add(GameObject obj)
+        public void AddRabbit(Rabbit rb)
         {
-            objects = objects.Concat(new GameObject[] { obj }).ToArray();
+            //objects = objects.Concat(new GameObject[] { obj }).ToArray();
+            rabbitList.Add(rb);
+        }
+        public void AddGrass(Grass gr)
+        {
+            grasslist.Add(gr);
         }
 
-        public void Remove(GameObject obj)
+        public void RemoveRabbit(Rabbit rb)
         {
-            objects = objects.Where(o => o != obj).ToArray();
+            //objects = objects.Where(o => o != obj).ToArray();
+            rabbitList.Remove(rb);
         }
 
         public virtual void Update()
         {
-            foreach (GameObject obj in GameObjects)
-            {
-                obj.UpdateOn(this);
-                obj.Position = PositiveMod(obj.Position, size);
-            }
+            foreach(Grass gr in grasslist)
+                {
+                gr.UpdateOn(this);
+                }
+            var r = rabbitList.Count();
+            for(int cont=0;cont<r;cont++)
+                {
+                rabbitList[cont].UpdateOn(this);
+                rabbitList[cont].Position = PositiveMod(rabbitList[cont].Position, size);
+                }
         }
 
         public virtual void DrawOn(Graphics graphics)
         {
-            foreach (GameObject obj in GameObjects)
-            {
-                graphics.FillRectangle(new Pen(obj.Color).Brush, obj.Bounds);
-            }
+            foreach(Grass gr in grasslist)
+                {
+                graphics.FillRectangle(new Pen(gr.Color).Brush, gr.Bounds);
+                }
+            foreach(Rabbit rb in rabbitList)
+                {
+                graphics.FillRectangle(new Pen(rb.Color).Brush, rb.Bounds);
+                }
         }
 
         // http://stackoverflow.com/a/10065670/4357302
@@ -89,7 +106,7 @@ namespace WolvesAndRabbitsSimulation.Engine
 
         public IEnumerable<GameObject> ObjectsAt(Point pos)
         {
-            return GameObjects.Where(each =>
+            return grasslist.Where(each =>
             {
                 Rectangle bounds = each.Bounds;
                 PointF center = new PointF((bounds.Left + bounds.Right - 1) / 2.0f,

@@ -104,10 +104,11 @@ namespace WolvesAndRabbitsSimulation.Engine
             return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
         }
 
-        public IEnumerable<GameObject> ObjectsAt(Point pos)
+        public IEnumerable<Grass> ObjectsAt(Point pos)
         {
             return grasslist.Where(each =>
             {
+                
                 Rectangle bounds = each.Bounds;
                 PointF center = new PointF((bounds.Left + bounds.Right - 1) / 2.0f,
                                            (bounds.Top + bounds.Bottom - 1) / 2.0f);

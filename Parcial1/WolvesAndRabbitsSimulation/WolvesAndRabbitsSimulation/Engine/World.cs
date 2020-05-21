@@ -66,7 +66,7 @@ namespace WolvesAndRabbitsSimulation.Engine
                 {
                 gr.UpdateOn(this);
                 }
-            var r = rabbitList.Count();
+            var r = rabbitList.Count()-1;
             for(int cont=0;cont<r;cont++)
                 {
                 rabbitList[cont].UpdateOn(this);
@@ -99,12 +99,48 @@ namespace WolvesAndRabbitsSimulation.Engine
             return new Point(PositiveMod(p.X, s.Width), PositiveMod(p.Y, s.Height));
         }
 
-        public double Dist(PointF a, PointF b)
+        public Grass ObjectsAt(Point pos)
         {
-            return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
-        }
+            Point p1 = new Point();
+            Point p2= new Point();
+            Point p3= new Point();
+            Grass tempGrass = null;
+            foreach(Grass gr in grasslist)
+            {
+               p1 = new Point( gr.Position.X, gr.Position.Y + 1);
+               p2 = new Point(gr.Position.Y + 1, gr.Position.X+1);
+               p3 = new Point( gr.Position.X+1, gr.Position.Y);
 
-        public IEnumerable<Grass> ObjectsAt(Point pos)
+                 if (gr.Position==pos || pos==p1 || pos == p2 || pos == p3)
+                  {
+                      tempGrass = gr;
+                      return tempGrass;
+                  }
+
+            }
+            return tempGrass;
+        }
+        public bool rabbitFinder(Point pos,Rabbit rb1)
+        {
+           // List<Rabbit> listaAux = new List<Rabbit>();
+           // listaAux = rabbitList;
+           // rabbitIgnorer(listaAux, rb1);
+            foreach(Rabbit rb in rabbitList)
+            {
+                if(pos==rb.Position&& rb1!=rb)
+                {
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+      /*  private List<Rabbit> rabbitIgnorer(List<Rabbit>rabbits,Rabbit rb)
+        {
+            rabbits.Remove(rb);
+            return rabbits;
+        }*/
+      /*  public IEnumerable<Grass> ObjectsAt(Point pos)
         {
             return grasslist.Where(each =>
             {
@@ -115,6 +151,6 @@ namespace WolvesAndRabbitsSimulation.Engine
                 return Dist(pos, center) <= bounds.Width / 2.0f
                     && Dist(pos, center) <= bounds.Height / 2.0f;
             });
-        }
+        }*/
     }
 }

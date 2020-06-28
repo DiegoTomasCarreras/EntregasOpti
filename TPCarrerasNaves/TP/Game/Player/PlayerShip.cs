@@ -132,9 +132,9 @@ namespace Game
         private bool CheckForCollision()
         {
             IEnumerable<EnemyShip> collisions = AllObjects
-                .Where((m) => CollidesWith(m))
-                .Select((m) => m as EnemyShip)
-                .Where((m) => m != null);
+                 .Select((m) => m as EnemyShip)
+                 .Where((m) => CollidesWith(m))
+                 .Where((m) => m != null);
             if (collisions.Count() == 0) return false;
             foreach (EnemyShip enemy in collisions)
             {
@@ -146,8 +146,8 @@ namespace Game
         private void CheckForPowerUps()
         {
             IEnumerable<PowerUp> pups = AllObjects
-                .Where((m) => CollidesWith(m))
-                .Select((m) => m as PowerUp);
+                .Select((m) => m as PowerUp)
+                 .Where((m) => CollidesWith(m));
 
             foreach (PowerUp pup in pups)
             {

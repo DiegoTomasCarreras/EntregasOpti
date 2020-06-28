@@ -50,8 +50,7 @@ namespace Game
         {
             FillScreenTiled(graphics);
         }
-
-        public void FillScreenTiled(Graphics graphics)
+        public void FillScreenTiled(Graphics graphics) //arreglar aca
         {
             int w = Width.RoundedToInt();
             int h = Height.RoundedToInt();
@@ -64,10 +63,10 @@ namespace Game
             {
                 for (int y1 = y; y1 <= Parent.Bottom; y1 += h)
                 {
-                    var img = new Bitmap(image, new Size(w, h));
+                    var img = new Bitmap(image, new Size(w, h)); //pregargar esta imagen
                     if (flipX) { img.RotateFlip(RotateFlipType.RotateNoneFlipX); }
                     if (flipY) { img.RotateFlip(RotateFlipType.RotateNoneFlipY); }
-                    graphics.DrawImage(img, new Point(x1, y1));
+                    graphics.DrawImage(image, new Point(x1, y1));
                 }
             }
         }

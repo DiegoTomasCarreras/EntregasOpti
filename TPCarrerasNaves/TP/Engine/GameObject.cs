@@ -347,8 +347,7 @@ namespace Engine
         {
             if (!visible) return;
             DrawOn(graphics);
-            //DrawBoundsOn(graphics);
-            children.ForEach((m) => m.FullDrawOn(graphics));
+            children.ForEach((m) => m.DrawOn(graphics));
         }
 
         private void DrawBoundsOn(Graphics graphics)

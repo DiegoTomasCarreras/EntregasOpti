@@ -28,17 +28,17 @@ namespace Game
             Random rnd = new Random();
             GameObject world = scene.World;
             {
-                var noise = new[]
-                {
-                    Properties.Resources.space_noise_1,
-                    Properties.Resources.space_noise_2,
-                    Properties.Resources.space_noise_3
-                };
+                //var noise = new[]
+                //{
+                //    Properties.Resources.space_noise_1,
+                //    Properties.Resources.space_noise_2,
+                //    Properties.Resources.space_noise_3
+                //};
 
-                world.AddChild(new SpaceNoise(noise[0], 3 * 1.5f, 1.00f, false, false));
-                world.AddChild(new SpaceNoise(noise[0], 3 * 2.5f, 2.00f, true, true));
-                world.AddChild(new SpaceNoise(noise[1], 3 * 3.5f, 1.50f, false, true));
-                world.AddChild(new SpaceNoise(noise[2], 3 * 5.5f, 2.00f, true, false));
+               // world.AddChild(new SpaceNoise(noise[0], 3 * 1.5f, 1.00f, false, false)); //estas 4 hacen bardo
+               // world.AddChild(new SpaceNoise(noise[0], 3 * 2.5f, 2.00f, true, true));
+               // world.AddChild(new SpaceNoise(noise[1], 3 * 3.5f, 1.50f, false, true));
+               // world.AddChild(new SpaceNoise(noise[2], 3 * 5.5f, 2.00f, true, false));
             }
 
             world.AddChild(new StarSpawner());
@@ -69,6 +69,11 @@ namespace Game
                 tally.UpdateDurations.LastOrDefault(), tally.AverageUpdate, tally.MaxUpdate,
                 tally.DrawDurations.LastOrDefault(), tally.AverageDraw, tally.MaxDraw,
                 tally.Count, tally.InstanceCounter.LastOrDefault(), Environment.TickCount - startTime);
+        }
+
+        private void scene_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

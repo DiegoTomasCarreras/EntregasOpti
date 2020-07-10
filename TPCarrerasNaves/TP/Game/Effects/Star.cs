@@ -30,6 +30,10 @@ namespace Game
         {
             X -= speed * deltaTime;
             Visible = true;
+            if(this.Position.X<=0)
+            {
+                this.Delete();
+            }
         }
 
         public override void DrawOn(Graphics graphics)

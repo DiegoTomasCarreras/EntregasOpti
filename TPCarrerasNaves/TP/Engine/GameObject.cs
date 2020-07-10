@@ -336,18 +336,23 @@ namespace Engine
             // Do nothing. Subclasses should override
         }
 
-        internal void FullUpdate(float deltaTime, bool world = false)
+        internal void FullUpdate(float deltaTime, bool world = false) //que raios
         {
             if (Parent == null && !world) return;
             Update(deltaTime);
-            children.ToList().ForEach((m) => m.FullUpdate(deltaTime));
+            children.ToList().ForEach((m) => m.FullUpdate(deltaTime)); //porque hace tolist si ya es una lista?
+          //  children.ForEach((m) => m.FullUpdate(deltaTime));
         }
 
         internal void FullDrawOn(Graphics graphics)
         {
             if (!visible) return;
-            DrawOn(graphics);
+            //DrawOn(graphics); //dibuja el fondo negro pero no hace falta
             children.ForEach((m) => m.DrawOn(graphics));
+         //  foreach(var go in children)
+          //  {
+            //    go.DrawOn(graphics);
+           // }
         }
 
         private void DrawBoundsOn(Graphics graphics)

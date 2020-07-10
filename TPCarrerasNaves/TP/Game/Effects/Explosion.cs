@@ -75,6 +75,7 @@ namespace Game
             if(clock.Elapsed.TotalSeconds>0.7f)
             {
                 this.Delete();
+                this.RemoveParticle(this);
             }
         }
 

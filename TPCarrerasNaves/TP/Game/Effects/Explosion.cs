@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 using Engine;
 using Engine.Extensions;
+using System.Diagnostics;
 
 namespace Game
 {
     public class Explosion : GameObject
     {
         private static Random rnd = new Random();
+        private  Stopwatch clock;
 
         public static void Burst(GameObject world, PointF point, 
             int amount = 2000, 
@@ -30,7 +32,8 @@ namespace Game
                 float a = (float)Math.Cos(angle) * magnitude;
                 GameObject explosion = new Explosion(new PointF(a, o), initialSize, deltaSize, deltaAlpha);
                 explosion.Center = point;
-                world.AddChild(explosion);
+                //world.AddChild(explosion);
+                world.AddExplosionParticles(explosion);
             }
             world.Play(rnd.NextDouble() > 0.5 ?
                 Properties.Resources.explosion1 :
@@ -65,6 +68,14 @@ namespace Game
             alpha += deltaAlpha * deltaTime;
             X += speed.X * deltaTime;
             Y += speed.Y * deltaTime;
+            if(clock==null)
+            {
+                clock = Stopwatch.StartNew();
+            }
+            if(clock.Elapsed.TotalSeconds>0.7f)
+            {
+                this.Delete();
+            }
         }
 
         public override void DrawOn(Graphics graphics)

@@ -17,10 +17,15 @@ namespace Engine
         private RectangleF bounds = new RectangleF(0, 0, 30, 40);
         private EventHandler eventHandler = new EventHandler();
         private bool visible = true;
+        private List<GameObject> explosionParticles = new List<GameObject>();
 
         public List<GameObject> Children
         {
             get { return children; }
+        }
+        public List<GameObject> ExplosionParticles
+        {
+            get { return explosionParticles; }
         }
 
         public IEnumerable<GameObject> AllChildren
@@ -218,6 +223,11 @@ namespace Engine
             children.Add(child);
             child.Parent = this;
         }
+        public void AddExplosionParticles(GameObject particle)
+        {
+            explosionParticles.Add(particle);
+            //particle.parent = this;
+        }
 
         public void AddChildBack(GameObject child)
         {
@@ -237,6 +247,11 @@ namespace Engine
         {
             children.Remove(child);
             child.Parent = null;
+        }
+        public void RemoveParticle(GameObject particle)
+        {
+            explosionParticles.Remove(particle);
+            particle.parent = null;
         }
 
         public void Delete()
@@ -343,6 +358,13 @@ namespace Engine
             children.ToList().ForEach((m) => m.FullUpdate(deltaTime)); //porque hace tolist si ya es una lista?
           //  children.ForEach((m) => m.FullUpdate(deltaTime));
         }
+        internal void FullUpdateParticles(float deltaTime) 
+        {
+            //if (Parent == null && !world) return;
+            //Update(deltaTime);
+            explosionParticles.ToList().ForEach((m) => m.Update(deltaTime)); 
+           //  children.ForEach((m) => m.FullUpdate(deltaTime));
+        }
 
         internal void FullDrawOn(Graphics graphics)
         {
@@ -353,6 +375,16 @@ namespace Engine
           //  {
             //    go.DrawOn(graphics);
            // }
+        }
+        internal void FullDrawOnParticles(Graphics graphics)
+        {
+          //  if (!visible) return;
+            if(explosionParticles.Count==0)
+            {
+                return;
+            }
+            explosionParticles.ForEach((n) => n.DrawOn(graphics));
+
         }
 
         private void DrawBoundsOn(Graphics graphics)

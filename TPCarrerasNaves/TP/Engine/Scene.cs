@@ -51,6 +51,7 @@ namespace Engine
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
             world.FullDrawOn(e.Graphics);
+            world.FullDrawOnParticles(e.Graphics);
         }
 
         private void steppingTimer_Tick(object sender, EventArgs e)
@@ -62,6 +63,7 @@ namespace Engine
                 tally.RegisterUpdate();
                 tally.RegisterInstances(world.AllChildren.LongCount());
                 world.FullUpdate(delta, true);
+                world.FullUpdateParticles(delta);
                 lastStep = now;
                 Refresh();
             }
